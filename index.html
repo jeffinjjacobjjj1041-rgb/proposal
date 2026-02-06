@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Will You Be My Valentine 💘</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #111;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        /* Phone-style container */
+        .phone {
+            width: 390px;
+            height: 780px;
+            max-width: 100%;
+            background: linear-gradient(135deg, #ff6a88, #ff99ac, #ffc3a0);
+            border-radius: 30px;
+            box-shadow: 0 0 40px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            padding-top: 80px;
+        }
+
+        /* Background romantic icons */
+        .phone::before {
+            content: "🌹 ❤️ 🧸 💖 🌷 💕";
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            font-size: 50px;
+            opacity: 0.07;
+            transform: rotate(-20deg);
+        }
+
+        h1 {
+            font-size: 26px;
+            color: white;
+            margin: 0 20px 40px;
+            text-shadow: 2px 2px 8px #ff4d6d;
+        }
+
+        .btn {
+            width: 120px;
+            padding: 12px 0;
+            font-size: 18px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            position: absolute;
+            transition: 0.2s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        #yesBtn {
+            background: linear-gradient(45deg, #ff4d6d, #ff758f);
+            color: white;
+            left: 70px;
+            top: 420px;
+        }
+
+        #noBtn {
+            background: linear-gradient(45deg, #6c757d, #adb5bd);
+            color: white;
+            left: 210px;
+            top: 420px;
+        }
+
+        /* Floating hearts */
+        .heart {
+            position: absolute;
+            bottom: -20px;
+            font-size: 20px;
+            animation: floatUp 6s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0); opacity: 0.7; }
+            100% { transform: translateY(-800px); opacity: 0; }
+        }
+
+        /* Celebration screen */
+        #celebrate {
+            display: none;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ff4d6d, #ff758f);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        #celebrate img {
+            width: 70%;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        #celebrate h2 {
+            color: white;
+            font-size: 22px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="phone">
+
+    <h1 id="question">Will you be my Valentine? 💘🌹</h1>
+
+    <button id="yesBtn" class="btn">Yes 💕</button>
+    <button id="noBtn" class="btn">No 💔</button>
+
+    <div id="celebrate">
+        <img src="https://cdn.pixabay.com/photo/2016/11/29/09/32/couple-1868759_960_720.png">
+        <h2>YAYYY!! 💖</h2>
+    </div>
+
+</div>
+
+<audio id="bgMusic" loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mp3">
+</audio>
+
+<script>
+    document.body.addEventListener("click", () => {
+        document.getElementById("bgMusic").play();
+    }, { once: true });
+
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const celebrate = document.getElementById("celebrate");
+    const question = document.getElementById("question");
+
+    function moveNoButton() {
+        const phone = document.querySelector(".phone");
+        const maxX = phone.clientWidth - noBtn.offsetWidth;
+        const maxY = phone.clientHeight - noBtn.offsetHeight;
+        noBtn.style.left = Math.random() * maxX + "px";
+        noBtn.style.top = Math.random() * maxY + "px";
+    }
+
+    noBtn.addEventListener("mouseover", moveNoButton);
+    noBtn.addEventListener("touchstart", (e) => {
+        e.preventDefault();
+        moveNoButton();
+    });
+
+    yesBtn.addEventListener("click", () => {
+        question.style.display = "none";
+        yesBtn.style.display = "none";
+        noBtn.style.display = "none";
+        celebrate.style.display = "flex";
+    });
+
+    function createHeart() {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * 350 + "px";
+        document.querySelector(".phone").appendChild(heart);
+        setTimeout(() => heart.remove(), 6000);
+    }
+
+    setInterval(createHeart, 400);
+</script>
+
+</body>
+</html>
